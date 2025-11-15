@@ -25,6 +25,105 @@
         </div>
     </header>
 
+    <!-- Wallet Selection Modal -->
+    <div id="walletSelectionModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 max-w-md w-full mx-4">
+            <h3 class="text-2xl font-bold mb-6 text-center">Connect Wallet</h3>
+            <div class="space-y-3">
+                <button onclick="connectSpecificWallet('backpack')" class="w-full px-6 py-4 bg-orange-600 hover:bg-orange-700 rounded-lg font-semibold transition-all flex items-center justify-between">
+                    <span>🎒 Backpack</span>
+                    <span class="text-xs text-orange-200">Recommended</span>
+                </button>
+                <button onclick="connectSpecificWallet('phantom')" class="w-full px-6 py-4 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition-all flex items-center justify-between">
+                    <span>👻 Phantom</span>
+                    <span class="text-xs text-purple-200">Popular</span>
+                </button>
+                <button onclick="connectSpecificWallet('solflare')" class="w-full px-6 py-4 bg-yellow-600 hover:bg-yellow-700 rounded-lg font-semibold transition-all flex items-center justify-between">
+                    <span>☀️ Solflare</span>
+                    <span class="text-xs text-yellow-200">Mobile</span>
+                </button>
+                <button onclick="closeWalletSelection()" class="w-full px-6 py-4 bg-white/10 hover:bg-white/20 rounded-lg font-semibold transition-all">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Menu Dropdown -->
+    <div id="walletMenu" class="hidden absolute top-16 right-6 bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 p-4 min-w-[280px] z-50">
+        <div class="space-y-3">
+            <div class="flex items-center gap-3 pb-3 border-b border-white/10">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full"></div>
+                <div>
+                    <p class="text-sm font-semibold" id="walletAddress">0x123...789</p>
+                    <p class="text-xs text-gray-400" id="walletBalance">0 SOL</p>
+                </div>
+            </div>
+            <button onclick="copyAddress()" class="w-full px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-left text-sm transition-all">
+                📋 Copy Address
+            </button>
+            <button onclick="disconnectWallet()" class="w-full px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg text-left text-sm transition-all">
+                🔌 Disconnect
+            </button>
+        </div>
+    </div>
+
+    <!-- Send SOL Modal -->
+    <div id="sendSOLModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 max-w-md w-full mx-4">
+            <h3 class="text-2xl font-bold mb-4">💸 Send SOL</h3>
+            <p class="text-gray-300 mb-2">Send SOL to owner of:</p>
+            <p class="text-purple-400 font-bold text-xl mb-4" id="sendToDomain"></p>
+            <div class="bg-white/5 rounded-lg p-3 mb-4">
+                <p class="text-xs text-gray-400 mb-1">Owner Address:</p>
+                <p class="text-sm font-mono break-all" id="sendToAddress">Loading...</p>
+            </div>
+            <input 
+                type="number" 
+                id="solAmount" 
+                placeholder="Amount in SOL"
+                step="0.01"
+                class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:border-purple-500 focus:outline-none mb-4"
+            />
+            <div class="flex gap-3">
+                <button onclick="closeSendSOLModal()" class="flex-1 px-4 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-semibold">
+                    Cancel
+                </button>
+                <button onclick="sendSOL()" class="flex-1 px-4 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send NFT Modal -->
+    <div id="sendNFTModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 max-w-md w-full mx-4">
+            <h3 class="text-2xl font-bold mb-4">🎨 Send NFT</h3>
+            <p class="text-gray-300 mb-2">Send NFT to owner of:</p>
+            <p class="text-purple-400 font-bold text-xl mb-4" id="sendNFTToDomain"></p>
+            <div class="bg-white/5 rounded-lg p-3 mb-4">
+                <p class="text-xs text-gray-400 mb-1">Owner Address:</p>
+                <p class="text-sm font-mono break-all" id="sendNFTToAddress">Loading...</p>
+            </div>
+            <input 
+                type="text" 
+                id="nftMintAddress" 
+                placeholder="NFT Mint Address"
+                class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:border-purple-500 focus:outline-none mb-2 font-mono text-sm"
+            />
+            <p class="text-xs text-gray-400 mb-4">Enter the mint address of the NFT you want to send</p>
+            <div class="flex gap-3">
+                <button onclick="closeSendNFTModal()" class="flex-1 px-4 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-semibold">
+                    Cancel
+                </button>
+                <button onclick="sendNFT()" class="flex-1 px-4 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+
     <main class="max-w-6xl mx-auto px-6 py-12">
         <div class="text-center mb-16">
             <h2 class="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">Your Web3 Identity</h2>
@@ -44,6 +143,7 @@
                 <button id="searchBtn" class="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition-all shadow-lg whitespace-nowrap">Search</button>
             </div>
             <div id="domainStatus" class="hidden mt-6 p-6 rounded-lg border"></div>
+            <div id="domainOwnerInfo" class="hidden mt-6 p-6 rounded-lg border border-blue-500 bg-blue-500/10"></div>
             <div id="registerForm" class="hidden mt-6 space-y-4">
                 <div>
                     <label class="block text-sm font-semibold mb-2">Metadata (Optional)</label>
@@ -80,9 +180,7 @@
     <script src="https://unpkg.com/@solana/web3.js@1.87.6/lib/index.iife.min.js"></script>
     
     <script>
-        // ============================================
-        // BUFFER POLYFILL (Manual Implementation)
-        // ============================================
+        // BUFFER POLYFILL
         if (typeof Buffer === 'undefined') {
             window.Buffer = {
                 from: function(data, encoding) {
@@ -118,160 +216,167 @@
             el.scrollTop = el.scrollHeight;
         }
 
-    // ============================================
-    // CONFIGURATION - UPDATED FOR CARV SVM TESTNET
-    // ============================================
-    const CONFIG = {
-        PROGRAM_ID: "8MPuR7zKVk2XQJ7apb1Ksc49oKF4AozvF5huKhwBubCa",
-        TREASURY_ADDRESS: "3KLEMtjay3MTvNvtmBq8FNkgvfmw3phPUuvggP2vPo83",
-        NETWORK: "carv-testnet",
-        RPC_ENDPOINT: "https://rpc.testnet.carv.io/rpc", // <--- CARV SVM testnet endpoint
-    };
+        const CONFIG = {
+            PROGRAM_ID: "8MPuR7zKVk2XQJ7apb1Ksc49oKF4AozvF5huKhwBubCa",
+            TREASURY_ADDRESS: "3KLEMtjay3MTvNvtmBq8FNkgvfmw3phPUuvggP2vPo83",
+            NETWORK: "CARV SVM testnet",
+            RPC_ENDPOINT: "https://rpc.testnet.carv.io/rpc",
+        };
 
-    let wallet = null;              // PublicKey instance (solanaWeb3.PublicKey)
-    let connection = null;          // solanaWeb3.Connection
-    let walletProviderName = null;  // "phantom" or "backpack" or null
+        let wallet = null;
+        let connection = null;
+        let walletProvider = null; // Store which wallet is being used
 
-    // ============================================
-    // INIT (detect multiple wallets incl. Backpack)
-    // ============================================
-    async function init() {
-        try {
-            debugLog('Starting init...');
-
-            if (typeof solanaWeb3 === 'undefined') {
-                debugLog('ERROR: Solana Web3 not loaded!');
-                showToast('Please refresh the page', 'error');
-                return;
-            }
-
-            // Detect injected wallet providers
-            const providers = [];
-            if (window.solana && window.solana.isPhantom) providers.push('phantom');
-            // Backpack exposes isBackpack flag on window.solana
-            if (window.solana && window.solana.isBackpack) providers.push('backpack');
-            // Some wallets inject under window.backpack (older versions) - check as fallback
-            if (window.backpack && window.backpack.solana) providers.push('backpack');
-
-            debugLog('Wallet providers detected', { providers });
-
-            // Update UI badge for network
-            document.getElementById("networkBadge").textContent = "CARV SVM Testnet";
-            document.getElementById("networkBadge").classList.remove("hidden");
-
-            // If there's an injected solana provider and it's already connected, set wallet
-            if (window.solana && window.solana.isConnected) {
-                // choose provider name if possible
-                if (window.solana.isBackpack) walletProviderName = 'backpack';
-                else if (window.solana.isPhantom) walletProviderName = 'phantom';
-                else walletProviderName = 'injected';
-
-                // set connection with CARV RPC
-                connection = new solanaWeb3.Connection(CONFIG.RPC_ENDPOINT, "confirmed");
-                try {
-                    const resp = await window.solana.connect({ onlyIfTrusted: true });
-                    if (resp?.publicKey) {
-                        wallet = new solanaWeb3.PublicKey(resp.publicKey.toString());
-                        debugLog('Auto-connected wallet', { wallet: wallet.toString(), provider: walletProviderName });
-                        updateUI();
-                        loadMyDomains();
-                    }
-                } catch (e) {
-                    debugLog('Auto-connect skipped or failed', e?.message || e);
-                }
-            }
-
-            debugLog('Init complete!');
-        } catch (e) {
-            debugLog('ERROR init', e.message || e);
-            console.error(e);
-        }
-    }
-
-    // ============================================
-    // CONNECT WALLET (supports Phantom & Backpack)
-    // ============================================
-    async function connectWallet() {
-        try {
-            debugLog('Connecting wallet...');
-
-            if (!window.solana && !window.backpack) {
-                showToast("Install a Solana wallet (Phantom or Backpack)!", "error");
-                setTimeout(() => window.open("https://phantom.app/", "_blank"), 2000);
-                return;
-            }
-
-            // Prefer explicit Backpack if available (some users may have both)
-            if (window.solana && window.solana.isBackpack) {
-                walletProviderName = 'backpack';
-            } else if (window.solana && window.solana.isPhantom) {
-                walletProviderName = 'phantom';
-            } else if (window.backpack && window.backpack.solana) {
-                // older backpack injection
-                walletProviderName = 'backpack';
-                window.solana = window.backpack.solana;
-            } else {
-                walletProviderName = 'injected';
-            }
-
-            showLoading('Connecting...', 'Approve in wallet');
-
-            // Connect (Backpack and Phantom both support window.solana.connect())
-            const resp = await window.solana.connect();
-            // Some providers return resp.publicKey as PublicKey-like object, ensure string -> PublicKey
-            wallet = new solanaWeb3.PublicKey(resp.publicKey.toString());
-            debugLog('Wallet connected', { address: wallet.toString(), provider: walletProviderName });
-
-            // Use CARV RPC
-            connection = new solanaWeb3.Connection(CONFIG.RPC_ENDPOINT, "confirmed");
-            const version = await connection.getVersion();
-            debugLog('RPC connected', { version: version['solana-core'], endpoint: CONFIG.RPC_ENDPOINT });
-
-            updateUI();
-            hideLoading();
-            showToast("Connected! ✅", "success");
-            loadMyDomains();
-
-        } catch (e) {
-            debugLog('ERROR connect', e.message || e);
-            console.error(e);
-            hideLoading();
-            // Backpack can throw userRejected the message - handle gracefully
-            if (e?.code === 4001 || /user rejected/i.test(e?.message || '')) {
-                showToast("Connection rejected by wallet", "info");
-            } else {
-                showToast("Failed: " + (e.message || e), "error");
-            }
-        }
-    }
-
-        // ============================================
-        // DOMAIN PDA - SIMPLIFIED
-        // ============================================
-        async function getDomainPDA(name) {
+        async function init() {
             try {
-                debugLog('Getting PDA for', { name });
+                debugLog('Starting init...');
                 
-                // Convert string to bytes manually
-                const domainBytes = new TextEncoder().encode("domain");
-                const nameBytes = new TextEncoder().encode(name);
+                if (typeof solanaWeb3 === 'undefined') {
+                    debugLog('ERROR: Solana Web3 not loaded!');
+                    showToast('Please refresh the page', 'error');
+                    return;
+                }
                 
-                debugLog('Bytes created', {
-                    domainLen: domainBytes.length,
-                    nameLen: nameBytes.length
+                debugLog('Solana Web3 loaded');
+                
+                if (CONFIG.NETWORK.includes("testnet")) {
+                    document.getElementById("networkBadge").classList.remove("hidden");
+                }
+                
+                // Check which wallets are available
+                const availableWallets = [];
+                if (window.backpack) {
+                    availableWallets.push('Backpack');
+                    debugLog('Backpack detected');
+                }
+                if (window.solana && window.solana.isPhantom) {
+                    availableWallets.push('Phantom');
+                    debugLog('Phantom detected');
+                }
+                if (window.solflare) {
+                    availableWallets.push('Solflare');
+                    debugLog('Solflare detected');
+                }
+                
+                debugLog('Available wallets', { wallets: availableWallets });
+                
+                // Auto-connect priority: Backpack > Solflare > Phantom
+                // Backpack is recommended for custom RPC
+                if (window.backpack?.isConnected) {
+                    walletProvider = window.backpack;
+                    debugLog('Auto-connecting to Backpack...');
+                    await connectWallet();
+                } else if (window.solflare?.isConnected) {
+                    walletProvider = window.solflare;
+                    debugLog('Auto-connecting to Solflare...');
+                    await connectWallet();
+                } else if (window.solana?.isConnected && !window.solana.isPhantom) {
+                    // Other Solana wallets (not Phantom)
+                    walletProvider = window.solana;
+                    debugLog('Auto-connecting to Solana wallet...');
+                    await connectWallet();
+                }
+                // Note: Phantom auto-connect disabled due to custom RPC compatibility issues
+                
+                debugLog('Init complete!');
+            } catch (e) {
+                debugLog('ERROR init', e.message);
+                console.error(e);
+            }
+        }
+
+        function showWalletSelection() {
+            document.getElementById('walletSelectionModal').classList.remove('hidden');
+        }
+
+        function closeWalletSelection() {
+            document.getElementById('walletSelectionModal').classList.add('hidden');
+        }
+
+        async function connectSpecificWallet(walletType) {
+            try {
+                debugLog('Connecting to ' + walletType);
+                closeWalletSelection();
+                
+                if (walletType === 'backpack') {
+                    if (!window.backpack) {
+                        showToast("Install Backpack wallet!", "error");
+                        setTimeout(() => window.open("https://backpack.app/", "_blank"), 2000);
+                        return;
+                    }
+                    walletProvider = window.backpack;
+                } else if (walletType === 'phantom') {
+                    if (!window.solana || !window.solana.isPhantom) {
+                        showToast("Install Phantom wallet!", "error");
+                        setTimeout(() => window.open("https://phantom.app/", "_blank"), 2000);
+                        return;
+                    }
+                    walletProvider = window.solana;
+                } else if (walletType === 'solflare') {
+                    if (!window.solflare) {
+                        showToast("Install Solflare wallet!", "error");
+                        setTimeout(() => window.open("https://solflare.com/", "_blank"), 2000);
+                        return;
+                    }
+                    walletProvider = window.solflare;
+                }
+                
+                await connectWallet();
+            } catch (e) {
+                debugLog('ERROR connecting specific wallet', e.message);
+                console.error(e);
+                showToast("Failed: " + e.message, "error");
+            }
+        }
+
+        async function connectWallet() {
+            try {
+                debugLog('Connecting wallet...');
+                
+                if (!walletProvider) {
+                    showToast("No wallet selected!", "error");
+                    return;
+                }
+
+                showLoading('Connecting...', 'Approve in wallet');
+                
+                const resp = await walletProvider.connect();
+                wallet = resp.publicKey;
+                
+                const walletName = walletProvider === window.backpack ? 'Backpack' : 
+                                   walletProvider === window.solflare ? 'Solflare' : 'Phantom';
+                
+                debugLog('Wallet connected', { 
+                    address: wallet.toString(),
+                    provider: walletName
                 });
                 
+                connection = new solanaWeb3.Connection(CONFIG.RPC_ENDPOINT, "confirmed");
+                debugLog('RPC connected to ' + CONFIG.RPC_ENDPOINT);
+                
+                updateUI();
+                hideLoading();
+                showToast(`Connected to ${walletName}! ✅`, "success");
+                loadMyDomains();
+                
+            } catch (e) {
+                debugLog('ERROR connect', e.message);
+                console.error(e);
+                hideLoading();
+                showToast("Failed: " + e.message, "error");
+            }
+        }
+
+        async function getDomainPDA(name) {
+            try {
+                const domainBytes = new TextEncoder().encode("domain");
+                const nameBytes = new TextEncoder().encode(name);
                 const programId = new solanaWeb3.PublicKey(CONFIG.PROGRAM_ID);
                 
                 const [pda, bump] = await solanaWeb3.PublicKey.findProgramAddressSync(
                     [domainBytes, nameBytes],
                     programId
                 );
-                
-                debugLog('PDA found', { 
-                    address: pda.toString(),
-                    bump: bump 
-                });
                 
                 return pda;
             } catch (e) {
@@ -280,13 +385,8 @@
             }
         }
 
-        // ============================================
-        // SEARCH
-        // ============================================
         async function searchDomain() {
             try {
-                debugLog('Search started');
-                
                 const input = document.getElementById("domainInput").value.toLowerCase().trim();
                 
                 if (!input) {
@@ -301,8 +401,6 @@
                     showToast("Letters, numbers, hyphens only", "error");
                     return;
                 }
-                
-                debugLog('Searching domain', { name: input });
 
                 if (!connection) {
                     showToast("Connect wallet first", "error");
@@ -312,33 +410,69 @@
                 showLoading("Searching...");
 
                 const pda = await getDomainPDA(input);
-                debugLog('Checking account', { pda: pda.toString() });
-                
                 const accountInfo = await connection.getAccountInfo(pda);
-                debugLog('Account result', { 
-                    exists: !!accountInfo,
-                    dataLength: accountInfo?.data?.length 
-                });
 
                 const statusDiv = document.getElementById("domainStatus");
                 const registerForm = document.getElementById("registerForm");
+                const ownerInfoDiv = document.getElementById("domainOwnerInfo");
 
                 if (accountInfo) {
+                    const data = accountInfo.data;
+                    const ownerBytes = data.slice(8, 40);
+                    const owner = new solanaWeb3.PublicKey(ownerBytes);
+                    
+                    let metadata = '';
+                    try {
+                        let offset = 40;
+                        const nameLen = new DataView(data.buffer, data.byteOffset + offset, 4).getUint32(0, true);
+                        offset += 4 + nameLen + 8 + 8 + 1;
+                        const dataLen = new DataView(data.buffer, data.byteOffset + offset, 4).getUint32(0, true);
+                        offset += 4;
+                        const dataBytes = data.slice(offset, offset + dataLen);
+                        metadata = new TextDecoder().decode(dataBytes);
+                    } catch (e) {}
+                    
                     statusDiv.className = "mt-6 p-6 rounded-lg border border-red-500 bg-red-500/10";
                     statusDiv.innerHTML = `<div class="flex items-center gap-3"><svg class="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293z" clip-rule="evenodd"/></svg><span class="font-bold text-lg">${input}.carv is taken ❌</span></div>`;
                     statusDiv.classList.remove("hidden");
                     registerForm.classList.add("hidden");
-                    debugLog('Domain taken');
+                    
+                    const isMyDomain = wallet && owner.toString() === wallet.toString();
+                    
+                    ownerInfoDiv.className = "mt-6 p-6 rounded-lg border border-blue-500 bg-blue-500/10";
+                    ownerInfoDiv.innerHTML = `
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-400 mb-2">Owner:</p>
+                            <p class="font-mono text-sm break-all text-blue-300">${owner.toString()}</p>
+                            ${isMyDomain ? '<p class="text-green-400 text-sm mt-2">✅ This is your domain</p>' : ''}
+                        </div>
+                        ${metadata ? `
+                            <div class="mb-4 p-3 bg-white/5 rounded">
+                                <p class="text-xs text-gray-400 mb-1 font-semibold">Metadata:</p>
+                                <pre class="font-mono text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap">${metadata}</pre>
+                            </div>
+                        ` : ''}
+                        ${!isMyDomain && wallet ? `
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="showSendSOLModalForSearch('${input}', '${owner.toString()}')" class="flex-1 px-4 py-3 bg-yellow-600 hover:bg-yellow-700 rounded-lg font-semibold transition-all flex items-center justify-center gap-2">
+                                    💸 Send SOL
+                                </button>
+                                <button onclick="showSendNFTModalForSearch('${input}', '${owner.toString()}')" class="flex-1 px-4 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition-all flex items-center justify-center gap-2">
+                                    🎨 Send NFT
+                                </button>
+                            </div>
+                        ` : ''}
+                        ${!wallet ? '<p class="text-yellow-400 text-sm mt-4">💡 Connect wallet to send SOL or NFT</p>' : ''}
+                    `;
+                    ownerInfoDiv.classList.remove("hidden");
                 } else {
                     statusDiv.className = "mt-6 p-6 rounded-lg border border-green-500 bg-green-500/10";
                     statusDiv.innerHTML = `<div class="flex items-center gap-3"><svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg><span class="font-bold text-lg">${input}.carv is available! 🎉</span></div>`;
                     statusDiv.classList.remove("hidden");
-                    debugLog('Domain available!');
+                    ownerInfoDiv.classList.add("hidden");
                     
                     if (wallet) {
                         registerForm.classList.remove("hidden");
-                    } else {
-                        showToast("Connect wallet to register", "info");
                     }
                 }
                 
@@ -346,56 +480,31 @@
                 
             } catch (e) {
                 debugLog('ERROR search', e.message);
-                console.error('Full error:', e);
                 hideLoading();
                 showToast("Error: " + e.message, "error");
             }
         }
 
-        // ============================================
-        // REGISTER (Fixed - Proper Anchor Format)
-        // ============================================
         async function registerDomain() {
             try {
                 const name = document.getElementById("domainInput").value.toLowerCase().trim();
-
                 if (!wallet) {
                     showToast("Connect wallet", "error");
                     return;
                 }
                 
-                debugLog('Registering', { name });
-                showLoading("Building transaction...", "This may take a moment");
+                showLoading("Building transaction...");
 
                 const pda = await getDomainPDA(name);
                 const treasury = new solanaWeb3.PublicKey(CONFIG.TREASURY_ADDRESS);
                 const programId = new solanaWeb3.PublicKey(CONFIG.PROGRAM_ID);
                 
-                debugLog('Accounts', {
-                    domain: pda.toString(),
-                    owner: wallet.toString(),
-                    treasury: treasury.toString(),
-                    program: programId.toString()
-                });
-                
-                // Build instruction data for Anchor "register" function
-                // Format: [discriminator(8 bytes)] + [name as string - length prefix + data]
-                
-                // 1. Discriminator (first 8 bytes of sha256("global:register"))
                 const discriminator = new Uint8Array([211, 124, 67, 15, 211, 194, 178, 240]);
-                
-                // 2. String format in Anchor: 4-byte length (little-endian) + UTF-8 bytes
                 const nameBytes = new TextEncoder().encode(name);
                 const nameLengthBytes = new Uint8Array(4);
                 new DataView(nameLengthBytes.buffer).setUint32(0, nameBytes.length, true);
                 
-                // 3. Concatenate all parts
-                const instructionData = new Uint8Array(
-                    discriminator.length + 
-                    nameLengthBytes.length + 
-                    nameBytes.length
-                );
-                
+                const instructionData = new Uint8Array(discriminator.length + nameLengthBytes.length + nameBytes.length);
                 let offset = 0;
                 instructionData.set(discriminator, offset);
                 offset += discriminator.length;
@@ -403,15 +512,6 @@
                 offset += nameLengthBytes.length;
                 instructionData.set(nameBytes, offset);
                 
-                debugLog('Instruction data built', { 
-                    totalBytes: instructionData.length,
-                    discriminator: Array.from(discriminator),
-                    nameLength: nameBytes.length,
-                    nameLengthPrefix: Array.from(nameLengthBytes),
-                    nameUtf8: Array.from(nameBytes).slice(0, 10) // First 10 bytes
-                });
-                
-                // Create the instruction
                 const instruction = new solanaWeb3.TransactionInstruction({
                     keys: [
                         { pubkey: pda, isSigner: false, isWritable: true },
@@ -423,63 +523,23 @@
                     data: instructionData,
                 });
                 
-                debugLog('Instruction created', {
-                    numKeys: instruction.keys.length,
-                    programId: instruction.programId.toString()
-                });
-                
-                // Build and send transaction
                 const transaction = new solanaWeb3.Transaction().add(instruction);
                 transaction.feePayer = wallet;
                 
-                debugLog('Getting recent blockhash...');
                 const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('finalized');
                 transaction.recentBlockhash = blockhash;
                 
-                debugLog('Blockhash obtained', { blockhash });
-                
-                // Simulate first to catch errors early
-                debugLog('Simulating transaction...');
-                showLoading("Simulating transaction...", "Checking for errors");
-                
-                try {
-                    const simulation = await connection.simulateTransaction(transaction);
-                    debugLog('Simulation result', {
-                        err: simulation.value.err,
-                        logs: simulation.value.logs?.slice(0, 5) // First 5 logs
-                    });
-                    
-                    if (simulation.value.err) {
-                        throw new Error('Simulation failed: ' + JSON.stringify(simulation.value.err));
-                    }
-                } catch (simError) {
-                    debugLog('Simulation error', simError.message);
-                    throw new Error('Transaction will fail: ' + simError.message);
-                }
-                
-                debugLog('Simulation passed! Requesting signature...');
                 showLoading("Waiting for approval...", "Approve in Phantom");
+                const signed = await walletProvider.signTransaction(transaction);
                 
-                const signed = await window.solana.signTransaction(transaction);
-                debugLog('Transaction signed');
-                
-                debugLog('Sending transaction...');
-                showLoading("Sending transaction...", "Please wait");
-                
+                showLoading("Sending transaction...");
                 const signature = await connection.sendRawTransaction(signed.serialize(), {
                     skipPreflight: false,
                     preflightCommitment: 'confirmed',
                     maxRetries: 3
                 });
                 
-                debugLog('Transaction sent!', { signature });
-                debugLog('Explorer link', { 
-                    url: `https://explorer.solana.com/tx/${signature}?cluster=${CONFIG.NETWORK}`
-                });
-                
-                showLoading("Confirming transaction...", "This may take 10-30 seconds");
-                
-                // Wait for confirmation
+                showLoading("Confirming...");
                 const confirmation = await connection.confirmTransaction({
                     signature: signature,
                     blockhash: blockhash,
@@ -487,187 +547,109 @@
                 }, 'confirmed');
                 
                 if (confirmation.value.err) {
-                    debugLog('Confirmation error', confirmation.value.err);
-                    throw new Error('Transaction failed: ' + JSON.stringify(confirmation.value.err));
+                    throw new Error('Transaction failed');
                 }
                 
-                debugLog('Transaction CONFIRMED! ✅');
                 hideLoading();
-                showToast(`${name}.carv registered successfully! 🎉`, "success");
+                showToast(`${name}.carv registered! 🎉`, "success");
                 
-                // Show explorer link after 2 seconds
-                setTimeout(() => {
-                    const explorerUrl = `https://explorer.solana.com/tx/${signature}?cluster=${CONFIG.NETWORK}`;
-                    showToast(`<a href="${explorerUrl}" target="_blank" class="underline">View on Explorer →</a>`, "success");
-                }, 2000);
-                
-                // Clear form
                 document.getElementById("domainInput").value = "";
                 document.getElementById("domainStatus").classList.add("hidden");
                 document.getElementById("registerForm").classList.add("hidden");
                 
-                // Reload domains after 3 seconds
                 setTimeout(() => loadMyDomains(), 3000);
                 
             } catch (e) {
                 debugLog('ERROR register', e.message);
-                console.error('Full registration error:', e);
                 hideLoading();
-                
-                // Parse error messages
-                let errorMsg = e.message;
-                
-                if (errorMsg.includes('0x0')) {
-                    errorMsg = 'Program error. Check that Program ID and Treasury are correct.';
-                } else if (errorMsg.includes('0x1')) {
-                    errorMsg = 'Insufficient funds. You need at least 0.05 SOL.';
-                } else if (errorMsg.includes('0x65')) {
-                    errorMsg = 'Account validation failed. The domain may already exist or there\'s a configuration issue.';
-                } else if (errorMsg.includes('Simulation failed')) {
-                    errorMsg = 'Transaction simulation failed. Check console for details.';
-                }
-                
-                showToast("Registration failed: " + errorMsg, "error");
+                showToast("Registration failed: " + e.message, "error");
             }
         }
 
-        // ============================================
-        // LOAD DOMAINS (Enhanced with Actions)
-        // ============================================
         async function loadMyDomains() {
-            if (!wallet || !connection) {
-                debugLog('Cannot load domains - no wallet/connection');
-                return;
-            }
+            if (!wallet || !connection) return;
 
             const container = document.getElementById("myDomains");
             container.innerHTML = '<div class="text-center py-4"><div class="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div></div>';
-            
-            debugLog('Loading domains...');
 
             try {
                 const programId = new solanaWeb3.PublicKey(CONFIG.PROGRAM_ID);
-                
                 const accounts = await connection.getProgramAccounts(programId, {
-                    filters: [
-                        {
-                            memcmp: {
-                                offset: 8,
-                                bytes: wallet.toBase58(),
-                            }
+                    filters: [{
+                        memcmp: {
+                            offset: 8,
+                            bytes: wallet.toString(),
                         }
-                    ]
+                    }]
                 });
-                
-                debugLog('Domains loaded', { count: accounts.length });
 
                 if (accounts.length === 0) {
-                    container.innerHTML = '<div class="text-gray-400 text-center py-12"><p>No domains yet. Register your first one! 🚀</p></div>';
+                    container.innerHTML = '<div class="text-gray-400 text-center py-12"><p>No domains yet</p></div>';
                     return;
                 }
 
-                // Parse domain data
                 const domains = accounts.map(account => {
                     const data = account.account.data;
-                    
-                    // Try to parse domain data
                     try {
-                        // Skip discriminator (8 bytes) + owner (32 bytes) = 40
                         let offset = 40;
-                        
-                        // Read name (4-byte length prefix + string)
                         const nameLen = new DataView(data.buffer, data.byteOffset + offset, 4).getUint32(0, true);
                         offset += 4;
                         const nameBytes = data.slice(offset, offset + nameLen);
                         const name = new TextDecoder().decode(nameBytes);
                         offset += nameLen;
-                        
-                        // Read timestamps (i64 = 8 bytes each)
                         const registered = Number(new DataView(data.buffer, data.byteOffset + offset, 8).getBigInt64(0, true));
                         offset += 8;
                         const expires = Number(new DataView(data.buffer, data.byteOffset + offset, 8).getBigInt64(0, true));
                         offset += 8;
-                        
-                        // Read active (bool = 1 byte)
                         const active = data[offset] !== 0;
                         offset += 1;
-                        
-                        // Read metadata (4-byte length + string)
                         const dataLen = new DataView(data.buffer, data.byteOffset + offset, 4).getUint32(0, true);
                         offset += 4;
                         const dataBytes = data.slice(offset, offset + dataLen);
                         const metadata = new TextDecoder().decode(dataBytes);
                         
-                        return {
-                            address: account.pubkey.toString(),
-                            name,
-                            registered,
-                            expires,
-                            active,
-                            metadata
-                        };
+                        return { address: account.pubkey.toString(), name, registered, expires, active, metadata };
                     } catch (e) {
-                        debugLog('Error parsing domain', e.message);
-                        return {
-                            address: account.pubkey.toString(),
-                            name: 'Unknown',
-                            registered: 0,
-                            expires: 0,
-                            active: false,
-                            metadata: ''
-                        };
+                        return { address: account.pubkey.toString(), name: 'Unknown', registered: 0, expires: 0, active: false, metadata: '' };
                     }
                 });
 
                 const now = Math.floor(Date.now() / 1000);
-                
                 container.innerHTML = domains.map(domain => {
                     const daysLeft = Math.floor((domain.expires - now) / 86400);
                     const expired = daysLeft < 0;
                     const expiringSoon = daysLeft > 0 && daysLeft < 30;
                     
                     return `
-                        <div class="bg-white/5 rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all">
-                            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
-                                <div class="flex-1">
+                        <div class="bg-white/5 rounded-lg p-6 border border-white/10">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
                                     <h4 class="text-2xl font-bold mb-1">${domain.name}.carv</h4>
-                                    <p class="text-sm text-gray-400">Registered: ${new Date(domain.registered * 1000).toLocaleDateString()}</p>
                                     <p class="text-sm text-gray-400">Expires: ${new Date(domain.expires * 1000).toLocaleDateString()}</p>
                                 </div>
-                                <span class="px-3 py-1 rounded-full text-sm font-semibold self-start ${
+                                <span class="px-3 py-1 rounded-full text-sm font-semibold ${
                                     expired ? 'bg-red-500/20 text-red-300' : 
                                     expiringSoon ? 'bg-yellow-500/20 text-yellow-300' : 
                                     'bg-green-500/20 text-green-300'
                                 }">
-                                    ${expired ? '⚠️ Expired' : expiringSoon ? `⏰ ${daysLeft} days left` : `✅ ${daysLeft} days left`}
+                                    ${expired ? '⚠️ Expired' : `✅ ${daysLeft} days`}
                                 </span>
                             </div>
-                            
                             ${domain.metadata ? `
                                 <div class="mb-4 p-3 bg-white/5 rounded">
-                                    <p class="text-xs text-gray-400 mb-1 font-semibold">Metadata:</p>
-                                    <pre class="font-mono text-xs text-gray-300 overflow-x-auto whitespace-pre-wrap">${domain.metadata}</pre>
+                                    <p class="text-xs text-gray-400 mb-1">Metadata:</p>
+                                    <pre class="font-mono text-xs text-gray-300 overflow-x-auto">${domain.metadata}</pre>
                                 </div>
                             ` : ''}
-                            
                             <div class="flex flex-wrap gap-2">
-                                <button onclick="renewDomain('${domain.name}')" class="flex-1 min-w-[120px] px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                                    </svg>
-                                    Renew (0.02 SOL)
+                                <button onclick="renewDomain('${domain.name}')" class="flex-1 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm font-semibold">
+                                    🔄 Renew
                                 </button>
-                                <button onclick="showTransferModal('${domain.name}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-semibold transition-all flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                                    </svg>
-                                    Transfer
+                                <button onclick="showTransferModal('${domain.name}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-semibold">
+                                    ↔️ Transfer
                                 </button>
-                                <button onclick="showUpdateModal('${domain.name}', ${domain.metadata ? `\`${domain.metadata.replace(/`/g, '\\`')}\`` : '""'})" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-semibold transition-all flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                    </svg>
-                                    Update
+                                <button onclick="showUpdateModal('${domain.name}', '${domain.address}')" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-semibold">
+                                    ✏️ Update
                                 </button>
                             </div>
                         </div>
@@ -676,31 +658,19 @@
 
             } catch (e) {
                 debugLog('ERROR loading domains', e.message);
-                console.error(e);
                 container.innerHTML = '<p class="text-red-400 text-center py-8">Error loading domains</p>';
             }
         }
 
-        // ============================================
-        // RENEW DOMAIN
-        // ============================================
         async function renewDomain(name) {
             try {
-                debugLog('Renew clicked', { name });
+                if (!confirm(`Renew ${name}.carv for 0.02 SOL?`)) return;
+                showLoading("Renewing...");
                 
-                if (!confirm(`Renew ${name}.carv for 0.02 SOL (1 year)?`)) {
-                    return;
-                }
-                
-                showLoading("Renewing domain...", "Please approve in Phantom");
-
                 const pda = await getDomainPDA(name);
                 const treasury = new solanaWeb3.PublicKey(CONFIG.TREASURY_ADDRESS);
                 const programId = new solanaWeb3.PublicKey(CONFIG.PROGRAM_ID);
-                
-                // Get discriminator from generator tool - UPDATE THIS!
-                // For now using placeholder - replace with correct one from generator
-                const discriminator = new Uint8Array([43, 239, 15, 46, 27, 7, 163, 73]); // REPLACE THIS
+                const discriminator = new Uint8Array([43, 239, 15, 46, 27, 7, 163, 73]);
                 
                 const instruction = new solanaWeb3.TransactionInstruction({
                     keys: [
@@ -710,51 +680,28 @@
                         { pubkey: solanaWeb3.SystemProgram.programId, isSigner: false, isWritable: false },
                     ],
                     programId: programId,
-                    data: discriminator, // renew has no args, just discriminator
+                    data: discriminator,
                 });
                 
                 const transaction = new solanaWeb3.Transaction().add(instruction);
                 transaction.feePayer = wallet;
-                
                 const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('finalized');
                 transaction.recentBlockhash = blockhash;
                 
-                const signed = await window.solana.signTransaction(transaction);
-                const signature = await connection.sendRawTransaction(signed.serialize(), {
-                    skipPreflight: false,
-                    preflightCommitment: 'confirmed'
-                });
+                const signed = await walletProvider.signTransaction(transaction);
+                const signature = await connection.sendRawTransaction(signed.serialize());
+                await connection.confirmTransaction({ signature, blockhash, lastValidBlockHeight }, 'confirmed');
                 
-                debugLog('Renew tx sent', { signature });
-                
-                showLoading("Confirming...", "Please wait");
-                const confirmation = await connection.confirmTransaction({
-                    signature,
-                    blockhash,
-                    lastValidBlockHeight
-                }, 'confirmed');
-                
-                if (confirmation.value.err) {
-                    throw new Error('Transaction failed');
-                }
-                
-                debugLog('Renew confirmed!');
                 hideLoading();
-                showToast(`${name}.carv renewed successfully! ✨`, "success");
-                
+                showToast(`${name}.carv renewed! ✨`, "success");
                 setTimeout(() => loadMyDomains(), 2000);
-                
             } catch (e) {
                 debugLog('ERROR renew', e.message);
-                console.error(e);
                 hideLoading();
                 showToast("Renew failed: " + e.message, "error");
             }
         }
 
-        // ============================================
-        // TRANSFER DOMAIN
-        // ============================================
         function showTransferModal(name) {
             const modal = document.createElement('div');
             modal.id = 'transferModal';
@@ -762,20 +709,10 @@
             modal.innerHTML = `
                 <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 max-w-md w-full mx-4">
                     <h3 class="text-2xl font-bold mb-4">Transfer ${name}.carv</h3>
-                    <p class="text-gray-300 mb-6">Enter the recipient's Solana address:</p>
-                    <input 
-                        type="text" 
-                        id="transferAddress" 
-                        placeholder="Recipient wallet address"
-                        class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:border-purple-500 focus:outline-none mb-4"
-                    />
+                    <input type="text" id="transferAddress" placeholder="Recipient address" class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 mb-4"/>
                     <div class="flex gap-3">
-                        <button onclick="closeTransferModal()" class="flex-1 px-4 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-semibold transition-all">
-                            Cancel
-                        </button>
-                        <button onclick="transferDomain('${name}')" class="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-all">
-                            Transfer
-                        </button>
+                        <button onclick="closeTransferModal()" class="flex-1 px-4 py-3 bg-white/10 rounded-lg">Cancel</button>
+                        <button onclick="transferDomain('${name}')" class="flex-1 px-4 py-3 bg-blue-600 rounded-lg">Transfer</button>
                     </div>
                 </div>
             `;
@@ -790,25 +727,19 @@
         async function transferDomain(name) {
             try {
                 const addressInput = document.getElementById('transferAddress').value.trim();
-                
                 if (!addressInput) {
-                    showToast("Enter recipient address", "error");
+                    showToast("Enter address", "error");
                     return;
                 }
                 
-                debugLog('Transfer clicked', { name, to: addressInput });
-                
                 closeTransferModal();
-                showLoading("Transferring domain...", "Please approve in Phantom");
-
+                showLoading("Transferring...");
+                
                 const pda = await getDomainPDA(name);
                 const newOwner = new solanaWeb3.PublicKey(addressInput);
                 const programId = new solanaWeb3.PublicKey(CONFIG.PROGRAM_ID);
+                const discriminator = new Uint8Array([163, 52, 200, 231, 140, 3, 69, 186]);
                 
-                // Get discriminator from generator tool - UPDATE THIS!
-                const discriminator = new Uint8Array([163, 52, 200, 231, 140, 3, 69, 186]); // REPLACE THIS
-                
-                // Add newOwner pubkey (32 bytes)
                 const data = new Uint8Array(discriminator.length + 32);
                 data.set(discriminator, 0);
                 data.set(newOwner.toBytes(), discriminator.length);
@@ -824,68 +755,50 @@
                 
                 const transaction = new solanaWeb3.Transaction().add(instruction);
                 transaction.feePayer = wallet;
-                
                 const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('finalized');
                 transaction.recentBlockhash = blockhash;
                 
-                const signed = await window.solana.signTransaction(transaction);
-                const signature = await connection.sendRawTransaction(signed.serialize(), {
-                    skipPreflight: false,
-                    preflightCommitment: 'confirmed'
-                });
+                const signed = await walletProvider.signTransaction(transaction);
+                const signature = await connection.sendRawTransaction(signed.serialize());
+                await connection.confirmTransaction({ signature, blockhash, lastValidBlockHeight }, 'confirmed');
                 
-                debugLog('Transfer tx sent', { signature });
-                
-                showLoading("Confirming...", "Please wait");
-                const confirmation = await connection.confirmTransaction({
-                    signature,
-                    blockhash,
-                    lastValidBlockHeight
-                }, 'confirmed');
-                
-                if (confirmation.value.err) {
-                    throw new Error('Transaction failed');
-                }
-                
-                debugLog('Transfer confirmed!');
                 hideLoading();
-                showToast(`${name}.carv transferred successfully! 🎉`, "success");
-                
+                showToast(`${name}.carv transferred! 🎉`, "success");
                 setTimeout(() => loadMyDomains(), 2000);
-                
             } catch (e) {
                 debugLog('ERROR transfer', e.message);
-                console.error(e);
                 hideLoading();
                 showToast("Transfer failed: " + e.message, "error");
             }
         }
 
-        // ============================================
-        // UPDATE METADATA
-        // ============================================
-        function showUpdateModal(name, currentMetadata) {
+        async function showUpdateModal(name, domainAddress) {
+            let currentMetadata = '';
+            try {
+                const pda = new solanaWeb3.PublicKey(domainAddress);
+                const accountInfo = await connection.getAccountInfo(pda);
+                if (accountInfo) {
+                    const data = accountInfo.data;
+                    let offset = 40;
+                    const nameLen = new DataView(data.buffer, data.byteOffset + offset, 4).getUint32(0, true);
+                    offset += 4 + nameLen + 8 + 8 + 1;
+                    const dataLen = new DataView(data.buffer, data.byteOffset + offset, 4).getUint32(0, true);
+                    offset += 4;
+                    const dataBytes = data.slice(offset, offset + dataLen);
+                    currentMetadata = new TextDecoder().decode(dataBytes);
+                }
+            } catch (e) {}
+            
             const modal = document.createElement('div');
             modal.id = 'updateModal';
             modal.className = 'fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50';
             modal.innerHTML = `
                 <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 max-w-md w-full mx-4">
                     <h3 class="text-2xl font-bold mb-4">Update ${name}.carv</h3>
-                    <p class="text-gray-300 mb-4">Update domain metadata:</p>
-                    <textarea 
-                        id="updateMetadata" 
-                        placeholder='{"twitter": "@handle", "website": "https://example.com"}'
-                        class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:border-purple-500 focus:outline-none mb-4 font-mono text-sm"
-                        rows="5"
-                    >${currentMetadata}</textarea>
-                    <p class="text-xs text-gray-400 mb-4">Max 128 characters</p>
+                    <textarea id="updateMetadata" placeholder='{"twitter": "@handle"}' class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 mb-4 font-mono text-sm" rows="5">${currentMetadata}</textarea>
                     <div class="flex gap-3">
-                        <button onclick="closeUpdateModal()" class="flex-1 px-4 py-3 bg-white/10 hover:bg-white/20 rounded-lg font-semibold transition-all">
-                            Cancel
-                        </button>
-                        <button onclick="updateMetadata('${name}')" class="flex-1 px-4 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition-all">
-                            Update
-                        </button>
+                        <button onclick="closeUpdateModal()" class="flex-1 px-4 py-3 bg-white/10 rounded-lg">Cancel</button>
+                        <button onclick="updateMetadata('${name}')" class="flex-1 px-4 py-3 bg-green-600 rounded-lg">Update</button>
                     </div>
                 </div>
             `;
@@ -900,24 +813,18 @@
         async function updateMetadata(name) {
             try {
                 const metadataInput = document.getElementById('updateMetadata').value.trim();
-                
                 if (metadataInput.length > 128) {
-                    showToast("Metadata too long (max 128 chars)", "error");
+                    showToast("Max 128 chars", "error");
                     return;
                 }
                 
-                debugLog('Update metadata', { name, metadata: metadataInput });
-                
                 closeUpdateModal();
-                showLoading("Updating metadata...", "Please approve in Phantom");
-
+                showLoading("Updating...");
+                
                 const pda = await getDomainPDA(name);
                 const programId = new solanaWeb3.PublicKey(CONFIG.PROGRAM_ID);
+                const discriminator = new Uint8Array([223, 114, 91, 136, 197, 78, 153, 153]);
                 
-                // Get discriminator from generator tool - UPDATE THIS!
-                const discriminator = new Uint8Array([223, 114, 91, 136, 197, 78, 153, 153]); // REPLACE THIS
-                
-                // Encode metadata as string (4-byte length + UTF-8 bytes)
                 const metadataBytes = new TextEncoder().encode(metadataInput);
                 const lengthBytes = new Uint8Array(4);
                 new DataView(lengthBytes.buffer).setUint32(0, metadataBytes.length, true);
@@ -941,46 +848,256 @@
                 
                 const transaction = new solanaWeb3.Transaction().add(instruction);
                 transaction.feePayer = wallet;
-                
                 const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('finalized');
                 transaction.recentBlockhash = blockhash;
                 
-                const signed = await window.solana.signTransaction(transaction);
-                const signature = await connection.sendRawTransaction(signed.serialize(), {
-                    skipPreflight: false,
-                    preflightCommitment: 'confirmed'
-                });
+                const signed = await walletProvider.signTransaction(transaction);
+                const signature = await connection.sendRawTransaction(signed.serialize());
+                await connection.confirmTransaction({ signature, blockhash, lastValidBlockHeight }, 'confirmed');
                 
-                debugLog('Update tx sent', { signature });
-                
-                showLoading("Confirming...", "Please wait");
-                const confirmation = await connection.confirmTransaction({
-                    signature,
-                    blockhash,
-                    lastValidBlockHeight
-                }, 'confirmed');
-                
-                if (confirmation.value.err) {
-                    throw new Error('Transaction failed');
-                }
-                
-                debugLog('Update confirmed!');
                 hideLoading();
-                showToast(`${name}.carv updated successfully! ✨`, "success");
-                
+                showToast(`${name}.carv updated! ✨`, "success");
                 setTimeout(() => loadMyDomains(), 2000);
-                
             } catch (e) {
                 debugLog('ERROR update', e.message);
-                console.error(e);
                 hideLoading();
                 showToast("Update failed: " + e.message, "error");
             }
         }
 
-        // ============================================
-        // UI
-        // ============================================
+        function toggleWalletMenu() {
+            document.getElementById('walletMenu').classList.toggle('hidden');
+        }
+
+        function copyAddress() {
+            navigator.clipboard.writeText(wallet.toString());
+            showToast('Address copied! 📋', 'success');
+        }
+
+        async function disconnectWallet() {
+            try {
+                if (walletProvider && walletProvider.isConnected) {
+                    await walletProvider.disconnect();
+                }
+                wallet = null;
+                connection = null;
+                walletProvider = null;
+                
+                const btn = document.getElementById("connectWallet");
+                btn.innerHTML = "Connect Wallet";
+                btn.classList.remove("bg-green-600");
+                btn.classList.add("bg-purple-600");
+                document.getElementById('walletMenu').classList.add('hidden');
+                document.getElementById("myDomains").innerHTML = '<div class="text-gray-400 text-center py-12"><p>Connect wallet</p></div>';
+                showToast('Disconnected', 'info');
+                debugLog('Wallet disconnected');
+            } catch (e) {
+                debugLog('ERROR disconnect', e.message);
+            }
+        }
+
+        function showSendSOLModalForSearch(domainName, ownerAddress) {
+            document.getElementById('sendToDomain').textContent = domainName + '.carv';
+            document.getElementById('sendToAddress').textContent = ownerAddress;
+            document.getElementById('sendSOLModal').classList.remove('hidden');
+            window.currentSendOwner = ownerAddress;
+        }
+
+        function closeSendSOLModal() {
+            document.getElementById('sendSOLModal').classList.add('hidden');
+            document.getElementById('solAmount').value = '';
+        }
+
+        async function sendSOL() {
+            try {
+                const amount = parseFloat(document.getElementById('solAmount').value);
+                if (!amount || amount <= 0) {
+                    showToast('Enter valid amount', 'error');
+                    return;
+                }
+                
+                const ownerAddress = window.currentSendOwner;
+                if (!ownerAddress) {
+                    showToast('Owner address not found', 'error');
+                    return;
+                }
+                
+                debugLog('Sending SOL', { amount, to: ownerAddress });
+                showLoading('Sending SOL...', 'Please approve');
+                
+                const recipient = new solanaWeb3.PublicKey(ownerAddress);
+                
+                // Calculate lamports as plain number (works with Solana Web3.js)
+                const lamports = amount * 1_000_000_000;
+                
+                debugLog('Transfer details', {
+                    from: wallet.toString(),
+                    to: recipient.toString(),
+                    lamports: lamports,
+                    lamportsType: typeof lamports
+                });
+                
+                // Create transfer instruction manually to avoid encoding issues
+                const transferIx = solanaWeb3.SystemProgram.transfer({
+                    fromPubkey: wallet,
+                    toPubkey: recipient,
+                    lamports: lamports
+                });
+                
+                debugLog('Transfer instruction created', {
+                    programId: transferIx.programId.toString(),
+                    keys: transferIx.keys.length
+                });
+                
+                const transaction = new solanaWeb3.Transaction();
+                transaction.add(transferIx);
+                transaction.feePayer = wallet;
+                
+                const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('confirmed');
+                transaction.recentBlockhash = blockhash;
+                
+                debugLog('Transaction prepared, requesting signature...');
+                const signed = await window.solana.signTransaction(transaction);
+                
+                debugLog('Sending transaction...');
+                const signature = await connection.sendRawTransaction(signed.serialize(), {
+                    skipPreflight: false,
+                    preflightCommitment: 'confirmed'
+                });
+                
+                debugLog('TX sent', { signature });
+                showLoading('Confirming transaction...');
+                
+                const confirmation = await connection.confirmTransaction({
+                    signature: signature,
+                    blockhash: blockhash,
+                    lastValidBlockHeight: lastValidBlockHeight
+                }, 'confirmed');
+                
+                if (confirmation.value.err) {
+                    throw new Error('Transaction failed: ' + JSON.stringify(confirmation.value.err));
+                }
+                
+                debugLog('TX confirmed successfully!');
+                hideLoading();
+                closeSendSOLModal();
+                showToast(`${amount} SOL sent successfully! ✅`, 'success');
+                
+            } catch (e) {
+                debugLog('ERROR sending SOL', e.message);
+                console.error('Full error:', e);
+                console.error('Error stack:', e.stack);
+                hideLoading();
+                
+                let errorMsg = e.message;
+                if (errorMsg.includes('User rejected')) {
+                    errorMsg = 'Transaction cancelled';
+                } else if (errorMsg.includes('insufficient')) {
+                    errorMsg = 'Insufficient balance';
+                } else if (errorMsg.includes('Blob.encode')) {
+                    errorMsg = 'Transaction encoding error. Please try again.';
+                }
+                
+                showToast('Failed to send SOL: ' + errorMsg, 'error');
+            }
+        }
+
+        function showSendNFTModalForSearch(domainName, ownerAddress) {
+            document.getElementById('sendNFTToDomain').textContent = domainName + '.carv';
+            document.getElementById('sendNFTToAddress').textContent = ownerAddress;
+            document.getElementById('sendNFTModal').classList.remove('hidden');
+            window.currentNFTRecipient = ownerAddress;
+        }
+
+        function closeSendNFTModal() {
+            document.getElementById('sendNFTModal').classList.add('hidden');
+            document.getElementById('nftMintAddress').value = '';
+        }
+
+        async function sendNFT() {
+            try {
+                const mintAddress = document.getElementById('nftMintAddress').value.trim();
+                if (!mintAddress) {
+                    showToast('Enter NFT mint', 'error');
+                    return;
+                }
+                
+                const recipientAddress = window.currentNFTRecipient;
+                if (!recipientAddress) {
+                    showToast('Recipient not found', 'error');
+                    return;
+                }
+                
+                showLoading('Sending NFT...');
+                
+                const mint = new solanaWeb3.PublicKey(mintAddress);
+                const recipient = new solanaWeb3.PublicKey(recipientAddress);
+                const TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
+                const ASSOCIATED_TOKEN_PROGRAM_ID = new solanaWeb3.PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
+                
+                async function findATA(walletAddr, tokenMint) {
+                    const [address] = await solanaWeb3.PublicKey.findProgramAddress(
+                        [walletAddr.toBytes(), TOKEN_PROGRAM_ID.toBytes(), tokenMint.toBytes()],
+                        ASSOCIATED_TOKEN_PROGRAM_ID
+                    );
+                    return address;
+                }
+                
+                const senderATA = await findATA(wallet, mint);
+                const recipientATA = await findATA(recipient, mint);
+                
+                const recipientATAInfo = await connection.getAccountInfo(recipientATA);
+                const transaction = new solanaWeb3.Transaction();
+                
+                if (!recipientATAInfo) {
+                    const createATAIx = new solanaWeb3.TransactionInstruction({
+                        keys: [
+                            { pubkey: wallet, isSigner: true, isWritable: true },
+                            { pubkey: recipientATA, isSigner: false, isWritable: true },
+                            { pubkey: recipient, isSigner: false, isWritable: false },
+                            { pubkey: mint, isSigner: false, isWritable: false },
+                            { pubkey: solanaWeb3.SystemProgram.programId, isSigner: false, isWritable: false },
+                            { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
+                        ],
+                        programId: ASSOCIATED_TOKEN_PROGRAM_ID,
+                        data: Buffer.alloc(0)
+                    });
+                    transaction.add(createATAIx);
+                }
+                
+                const transferData = new Uint8Array(9);
+                transferData[0] = 3;
+                transferData[1] = 1;
+                
+                const transferIx = new solanaWeb3.TransactionInstruction({
+                    keys: [
+                        { pubkey: senderATA, isSigner: false, isWritable: true },
+                        { pubkey: recipientATA, isSigner: false, isWritable: true },
+                        { pubkey: wallet, isSigner: true, isWritable: false },
+                    ],
+                    programId: TOKEN_PROGRAM_ID,
+                    data: transferData
+                });
+                transaction.add(transferIx);
+                
+                transaction.feePayer = wallet;
+                const { blockhash } = await connection.getLatestBlockhash();
+                transaction.recentBlockhash = blockhash;
+                
+                const signed = await window.solana.signTransaction(transaction);
+                const signature = await connection.sendRawTransaction(signed.serialize());
+                await connection.confirmTransaction(signature);
+                
+                hideLoading();
+                closeSendNFTModal();
+                showToast('NFT sent! 🎉', 'success');
+            } catch (e) {
+                debugLog('ERROR sending NFT', e.message);
+                hideLoading();
+                showToast('Failed: ' + e.message, 'error');
+            }
+        }
+
         function updateUI() {
             const btn = document.getElementById("connectWallet");
             if (wallet) {
@@ -1004,45 +1121,28 @@
             const toast = document.getElementById("toast");
             const icon = document.getElementById("toastIcon");
             const message = document.getElementById("toastMessage");
-
             const icons = {
                 success: '<svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>',
                 error: '<svg class="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293z" clip-rule="evenodd"/></svg>',
                 info: '<svg class="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>'
             };
-
             icon.innerHTML = icons[type] || icons.info;
-            message.textContent = msg;
+            message.innerHTML = msg;
             toast.classList.remove("hidden");
             setTimeout(() => toast.classList.add("hidden"), 5000);
         }
 
-        // ============================================
-        // EVENTS
-        // ============================================
-        document.getElementById("connectWallet").onclick = connectWallet;
+        document.getElementById("connectWallet").onclick = showWalletSelection;
         document.getElementById("searchBtn").onclick = searchDomain;
         document.getElementById("registerBtn").onclick = registerDomain;
         document.getElementById("toastClose").onclick = () => document.getElementById("toast").classList.add("hidden");
-        
-        document.getElementById("domainInput").onkeypress = (e) => {
-            if (e.key === "Enter") searchDomain();
-        };
-        document.getElementById("domainInput").oninput = (e) => {
-            e.target.value = e.target.value.toLowerCase();
-        };
+        document.getElementById("domainInput").onkeypress = (e) => { if (e.key === "Enter") searchDomain(); };
+        document.getElementById("domainInput").oninput = (e) => { e.target.value = e.target.value.toLowerCase(); };
 
-        // ============================================
-        // INIT
-        // ============================================
         window.addEventListener("load", () => {
-            debugLog('Page loaded, waiting for scripts...');
-            setTimeout(() => {
-                debugLog('Starting initialization...');
-                init();
-            }, 1000);
+            setTimeout(() => init(), 1000);
         });
     </script>
-</body>
 
-</html>
+</body>
+    </html>
