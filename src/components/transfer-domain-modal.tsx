@@ -38,14 +38,31 @@ export function TransferDomainModal({ isOpen, onClose, domainName, onTransfer }:
       return;
     }
 
-    // Use direct wallet access (matching working HTML exactly)
-    const walletProvider = (window as any).solana;
+    // Use direct wallet access - support Phantom, Backpack, and OKX
+    const phantomProvider = (window as any).solana;
+    const backpackProvider = (window as any).backpack;
+    const okxProvider = (window as any).okxwallet?.solana;
+    
+    // Detect which wallet is connected
+    let walletProvider = null;
+    let walletName = '';
+    
+    if (backpackProvider?.isConnected) {
+      walletProvider = backpackProvider;
+      walletName = 'Backpack';
+    } else if (okxProvider?.isConnected) {
+      walletProvider = okxProvider;
+      walletName = 'OKX';
+    } else if (phantomProvider?.isConnected) {
+      walletProvider = phantomProvider;
+      walletName = 'Phantom';
+    }
     
     if (!walletProvider) {
       toast({
         variant: 'destructive',
         title: 'Wallet not connected',
-        description: 'Please connect your Phantom wallet to transfer the domain.',
+        description: 'Please connect your wallet to transfer the domain.',
       });
       return;
     }
@@ -58,6 +75,8 @@ export function TransferDomainModal({ isOpen, onClose, domainName, onTransfer }:
       });
       return;
     }
+    
+    console.log('🔍 Using wallet:', walletName);
 
     setIsTransferring(true);
     try {

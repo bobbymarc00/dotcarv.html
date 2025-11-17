@@ -89,13 +89,28 @@ export function DomainSearchSection() {
   const attemptTransaction = useCallback(async (transaction: Transaction) => {
     try {
       console.log('🔐 Attempting transaction with manual signing...');
+      console.log('🔍 Wallet adapter:', wallet?.adapter?.name);
+      console.log('🔍 signTransaction available:', !!signTransaction);
+      console.log('🔍 sendTransaction available:', !!sendTransaction);
       
-      if (!signTransaction) {
-        throw new Error('Manual transaction signing not available');
+      // For Backpack and OKX wallets, use sendTransaction instead of signTransaction
+      // These wallets don't always expose signTransaction properly
+      const walletName = wallet?.adapter?.name;
+      if (walletName === 'Backpack' || walletName === 'OKX Wallet' || !signTransaction) {
+        console.log(`🎒 Using sendTransaction for ${walletName || 'wallet'}...`);
+        if (!sendTransaction) {
+          throw new Error('Wallet connection not available. Please reconnect your wallet.');
+        }
+        const signature = await sendTransaction(transaction, connection);
+        console.log('✅ Transaction sent via sendTransaction:', signature);
+        return signature;
       }
       
+      // For Phantom and other wallets, use signTransaction
+      console.log('👻 Using signTransaction for standard wallet...');
       const signedTransaction = await signTransaction(transaction);
       const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+      console.log('✅ Transaction sent via signTransaction:', signature);
       return signature;
       
     } catch (error: any) {

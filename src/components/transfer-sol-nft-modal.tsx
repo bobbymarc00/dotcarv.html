@@ -53,7 +53,20 @@ export function TransferSolNftModal({ isOpen, onClose, domainName }: TransferSol
     if (!isClient) return;
 
     const checkWalletStatus = () => {
-      const walletProvider = (window as any).solana;
+      // Support Phantom, Backpack, and OKX wallets
+      const phantomProvider = (window as any).solana;
+      const backpackProvider = (window as any).backpack;
+      const okxProvider = (window as any).okxwallet?.solana;
+      
+      let walletProvider = null;
+      if (backpackProvider?.isConnected) {
+        walletProvider = backpackProvider;
+      } else if (okxProvider?.isConnected) {
+        walletProvider = okxProvider;
+      } else if (phantomProvider?.isConnected) {
+        walletProvider = phantomProvider;
+      }
+      
       const isConnected = walletProvider?.isConnected;
       const publicKey = walletProvider?.publicKey?.toString();
       
@@ -72,18 +85,37 @@ export function TransferSolNftModal({ isOpen, onClose, domainName }: TransferSol
     // Set up interval for real-time monitoring
     const interval = setInterval(checkWalletStatus, 1000);
 
-    // Listen for wallet events
-    const walletProvider = (window as any).solana;
-    if (walletProvider) {
-      walletProvider.on?.('connect', checkWalletStatus);
-      walletProvider.on?.('disconnect', checkWalletStatus);
+    // Listen for wallet events from all providers
+    const phantomProvider = (window as any).solana;
+    const backpackProvider = (window as any).backpack;
+    const okxProvider = (window as any).okxwallet?.solana;
+    
+    if (phantomProvider) {
+      phantomProvider.on?.('connect', checkWalletStatus);
+      phantomProvider.on?.('disconnect', checkWalletStatus);
+    }
+    if (backpackProvider) {
+      backpackProvider.on?.('connect', checkWalletStatus);
+      backpackProvider.on?.('disconnect', checkWalletStatus);
+    }
+    if (okxProvider) {
+      okxProvider.on?.('connect', checkWalletStatus);
+      okxProvider.on?.('disconnect', checkWalletStatus);
     }
 
     return () => {
       clearInterval(interval);
-      if (walletProvider) {
-        walletProvider.off?.('connect', checkWalletStatus);
-        walletProvider.off?.('disconnect', checkWalletStatus);
+      if (phantomProvider) {
+        phantomProvider.off?.('connect', checkWalletStatus);
+        phantomProvider.off?.('disconnect', checkWalletStatus);
+      }
+      if (backpackProvider) {
+        backpackProvider.off?.('connect', checkWalletStatus);
+        backpackProvider.off?.('disconnect', checkWalletStatus);
+      }
+      if (okxProvider) {
+        okxProvider.off?.('connect', checkWalletStatus);
+        okxProvider.off?.('disconnect', checkWalletStatus);
       }
     };
   }, [isClient]);
@@ -281,7 +313,20 @@ export function TransferSolNftModal({ isOpen, onClose, domainName }: TransferSol
         balance: walletBalance
       });
 
-      const walletProvider = (window as any).solana;
+      // Support Phantom, Backpack, and OKX wallets
+      const phantomProvider = (window as any).solana;
+      const backpackProvider = (window as any).backpack;
+      const okxProvider = (window as any).okxwallet?.solana;
+      
+      let walletProvider = null;
+      if (backpackProvider?.isConnected) {
+        walletProvider = backpackProvider;
+      } else if (okxProvider?.isConnected) {
+        walletProvider = okxProvider;
+      } else if (phantomProvider?.isConnected) {
+        walletProvider = phantomProvider;
+      }
+      
       if (!walletProvider) {
         throw new Error('Wallet provider not available');
       }
@@ -430,7 +475,20 @@ export function TransferSolNftModal({ isOpen, onClose, domainName }: TransferSol
         }
       }
 
-      const walletProvider = (window as any).solana;
+      // Support Phantom, Backpack, and OKX wallets
+      const phantomProvider = (window as any).solana;
+      const backpackProvider = (window as any).backpack;
+      const okxProvider = (window as any).okxwallet?.solana;
+      
+      let walletProvider = null;
+      if (backpackProvider?.isConnected) {
+        walletProvider = backpackProvider;
+      } else if (okxProvider?.isConnected) {
+        walletProvider = okxProvider;
+      } else if (phantomProvider?.isConnected) {
+        walletProvider = phantomProvider;
+      }
+      
       if (!walletProvider || !walletProvider.isConnected) {
         toast({
           variant: 'destructive',
